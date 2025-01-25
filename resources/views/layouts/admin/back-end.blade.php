@@ -13,14 +13,12 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Dashboard - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
-        </title>
+        <title> @yield('title') </title>
         <!-- CSS files -->
         <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet" />
-        @push('styles')
-        @endpush
+        @stack('styles')
         <style>
             @import url('https://rsms.me/inter/inter.css');
 
@@ -60,10 +58,10 @@
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <a href="./profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item">Profile</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="./settings.html" class="dropdown-item">Settings</a>
-                                <a href="./sign-in.html" class="dropdown-item">Logout</a>
+                                <a href="#" class="dropdown-item">Settings</a>
+                                <a href="#" class="dropdown-item">Logout</a>
                             </div>
                         </div>
                     </div>
@@ -74,12 +72,11 @@
 
             <!-- Page content -->
             <div class="page-wrapper">
+                <!-- Page header -->
+                @yield('header')
+
                 <!-- Page body -->
-                <div class="page-body">
-                    <div class="container-xl">
-                        @yield('content')
-                    </div>
-                </div>
+                @yield('content')
 
                 <!-- Footer -->
                 <footer class="footer footer-transparent d-print-none">
@@ -101,11 +98,10 @@
         </div>
 
         <!-- Libs JS -->
-        @push('scripts')
-        @endpush
+        @stack('scripts')
         <!-- Tabler Core -->
-        <script src="{{ asset('dist/js/tabler.min.js') }}" defer></script>
-        <script src="{{ asset('dist/js/demo.min.js') }}" defer></script>
+        <script src="{{ asset('dist/js/tabler.min.js') }}"></script>
+        <script src="{{ asset('dist/js/demo.min.js') }}"></script>
     </body>
 
 </html>
