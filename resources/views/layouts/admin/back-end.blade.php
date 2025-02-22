@@ -13,6 +13,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title> @yield('title') </title>
         <!-- CSS files -->
         <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet" />
@@ -102,6 +103,8 @@
         <!-- Tabler Core -->
         <script src="{{ asset('dist/js/tabler.min.js') }}"></script>
         <script src="{{ asset('dist/js/demo.min.js') }}"></script>
+    <!-- JS Tambahan -->
+        <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
     </body>
 
 </html>

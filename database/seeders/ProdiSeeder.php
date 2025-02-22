@@ -18,8 +18,8 @@ class ProdiSeeder extends Seeder
             'singkatan' => '',
             'jenjang' => 'S1',
             'akreditasi' => '',
-            'nosk_akreditasi' => 'S1',
-            'tahun_akreditasi' => 'S1',
+            'nosk_akreditasi' => '',
+            'tahun_akreditasi' => '',
         ]);
 
         Prodi::create([
@@ -27,8 +27,8 @@ class ProdiSeeder extends Seeder
             'singkatan' => '',
             'jenjang' => 'S1',
             'akreditasi' => '',
-            'nosk_akreditasi' => 'S1',
-            'tahun_akreditasi' => 'S1',
+            'nosk_akreditasi' => '',
+            'tahun_akreditasi' => '',
         ]);
 
         Prodi::create([
@@ -36,8 +36,53 @@ class ProdiSeeder extends Seeder
             'singkatan' => '',
             'jenjang' => 'S1',
             'akreditasi' => '',
-            'nosk_akreditasi' => 'S1',
-            'tahun_akreditasi' => 'S1',
+            'nosk_akreditasi' => '',
+            'tahun_akreditasi' => '',
+        ]);
+
+        Prodi::create([
+            'nama_prodi' => 'Teknik Mesin',
+            'singkatan' => '',
+            'jenjang' => 'S1',
+            'akreditasi' => '',
+            'nosk_akreditasi' => '',
+            'tahun_akreditasi' => '',
+        ]);
+
+        Prodi::create([
+            'nama_prodi' => 'Sisten Informasi',
+            'singkatan' => '',
+            'jenjang' => 'S1',
+            'akreditasi' => '',
+            'nosk_akreditasi' => '',
+            'tahun_akreditasi' => '',
+        ]);
+
+        Prodi::create([
+            'nama_prodi' => 'Pendidikan Agama Islam',
+            'singkatan' => '',
+            'jenjang' => 'S1',
+            'akreditasi' => '',
+            'nosk_akreditasi' => '',
+            'tahun_akreditasi' => '',
+        ]);
+
+        Prodi::create([
+            'nama_prodi' => 'Hukum Ekonomi Syariah',
+            'singkatan' => '',
+            'jenjang' => 'S1',
+            'akreditasi' => '',
+            'nosk_akreditasi' => '',
+            'tahun_akreditasi' => '',
+        ]);
+
+        Prodi::create([
+            'nama_prodi' => 'Hukum Keluarga',
+            'singkatan' => '',
+            'jenjang' => 'S1',
+            'akreditasi' => '',
+            'nosk_akreditasi' => '',
+            'tahun_akreditasi' => '',
         ]);
     }
 }

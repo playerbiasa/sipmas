@@ -30,13 +30,9 @@ class MahasiswasDataTable extends DataTable
                 <button class="btn btn-sm btn-primary" title="Edit" onclick="showEditModal(' . $row->id . ')">
                     <i class="fas fa-edit"></i>
                 </button>
-                <form action="' . route('mahasiswa.destroy', $row->id) . '" method="POST" style="display: inline-block;">
-                    ' . csrf_field() . '
-                    ' . method_field('DELETE') . '
-                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus" onclick="return confirm(\'Yakin ingin menghapus data ini?\')">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </form>
+                <button class="btn btn-sm btn-danger btn-delete" title="Hapus" data-id="' . $row->id . '">
+                    <i class="fas fa-trash"></i>
+                </button>
             ';
             })
             ->setRowId('id');

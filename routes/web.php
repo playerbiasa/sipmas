@@ -14,3 +14,4 @@ Route::get('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'show'])->name
 Route::get('/mahasiswa/{mahasiswa}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
 Route::put('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
 Route::delete('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+Route::get('/template',[MahasiswaController::class, 'template'])->name('mahasiswa.template');

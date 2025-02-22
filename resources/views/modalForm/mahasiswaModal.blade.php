@@ -62,13 +62,12 @@
                 <h5 class="modal-title">Import Mahasiswa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="importForm">
+            <form id="importForm" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <input type="file" name="file" id="file" class="form-control" required>
-                    <div class="progress mt-3">
-                        <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%"
-                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    <div class="mt-3">
+                        <p>Silahkan download template import Mahsiswa <a href="{{route('mahasiswa.template')}}" target="_blank">di sini</a></p>
                     </div>
                 </div>
                 <div class="modal-footer">

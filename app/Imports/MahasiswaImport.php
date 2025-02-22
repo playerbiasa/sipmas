@@ -2,23 +2,26 @@
 
 namespace App\Imports;
 
-use App\Models\Mahasiswa;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class MahasiswaImport implements ToModel, WithHeadingRow
+class MahasiswaImport implements WithMultipleSheets
 {
-    /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
-    public function model(array $row)
+    private $rowCount = 0;
+
+    public function sheets(): array
     {
-        return new Mahasiswa([
-            'nim' => $row['nim'],
-            'nama_mahasiswa' => $row['nama_mahasiswa'],
-            'prodi_id' => $row['prodi_id'],
-        ]);
+        return [
+            'Template Mahasiswa' => new MahasiswaSheetImport($this),
+        ];
+    }
+
+    public function incrementRowCount(): void
+    {
+        $this->rowCount++;
+    }
+
+    public function getRowCount(): int
+    {
+        return $this->rowCount;
     }
 }

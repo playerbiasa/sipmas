@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\MahasiswaTemplateExport;
 use App\Models\Prodi;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
@@ -20,12 +21,63 @@ class MahasiswaController extends Controller
 
     public function import(Request $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
+        try {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls,csv|max:10240',
+            ]);
 
-        Excel::import(new MahasiswaImport, $request->file('file'));
-        return response()->json(['success' => true, 'message' => 'Data berhasil diimport']);
+            $import = new MahasiswaImport();
+            Excel::import($import, $request->file('file'));
+
+            $rowCount = $import->getRowCount();
+            if ($rowCount === 0) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Tidak ada data yang diimport. Pastikan sheet pertama berisi data.',
+                    'data' => ['imported_rows' => 0]
+                ], 200);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil diimport',
+                'data' => ['imported_rows' => $rowCount]
+            ], 200);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $errorMessages = [];
+            foreach ($failures as $failure) {
+                $rowNum = $failure->row(); // Nomor baris
+                $errors = $failure->errors(); // Array error
+                $customErrors = [];
+                foreach ($errors as $error) {
+                    // Kustomisasi pesan error
+                    if (str_contains($error, 'nim has already been taken')) {
+                        $value = $failure->values()['nim'] ?? '';
+                        $customErrors[] = "NIM '$value' sudah digunakan.";
+                    } elseif (str_contains($error, 'email has already been taken')) {
+                        $value = $failure->values()['email'] ?? '';
+                        $customErrors[] = "Email '$value' sudah terdaftar.";
+                    } elseif (str_contains($error, 'prodi_id does not exist')) {
+                        $value = $failure->values()['prodi_id'] ?? '';
+                        $customErrors[] = "Prodi ID '$value' tidak valid.";
+                    } else {
+                        $customErrors[] = $error; // Default jika tidak ada kustomisasi
+                    }
+                }
+                $errorMessages[] = "Baris $rowNum: " . implode(', ', $customErrors);
+            }
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal: ' . implode(' | ', $errorMessages),
+                'errors' => $errorMessages
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengimport data: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function store(Request $request)
@@ -72,5 +124,10 @@ class MahasiswaController extends Controller
     {
         $mahasiswa->delete();
         return response()->json(['success' => true, 'message' => 'Data berhasil dihapus']);
+    }
+
+    public function template()
+    {
+        return Excel::download(new MahasiswaTemplateExport(),'template_import_mahasiswa.xlsx');
     }
 }

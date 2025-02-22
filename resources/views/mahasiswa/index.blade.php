@@ -28,7 +28,6 @@
                         </span>
                         <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
                             data-bs-target="#modal-report">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -40,7 +39,6 @@
                         </a>
                         <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
                             data-bs-target="#modal-report" aria-label="Tambah Mahasiswa">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -127,12 +125,56 @@
                 data: formData,
                 success: function(response) {
                     $('#editModal').modal('hide'); // Tutup modal
-                    alert('Data mahasiswa berhasil diperbarui.');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message
+                    });
                     $('#mahasiswas-table').DataTable().ajax.reload(); // Reload DataTables
                 },
                 error: function(xhr) {
                     alert('Terjadi kesalahan saat memperbarui data mahasiswa.');
                     console.error(xhr.responseText);
+                }
+            });
+        });
+
+        $('#importForm').on('submit', function(e) {
+            e.preventDefault();
+
+            let formData = new FormData(this);
+            let submitButton = $('#btn-import');
+
+            submitButton.prop('disabled', true);
+
+            $.ajax({
+                url: "{{ route('mahasiswa.import') }}",
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    $('#modal-import').modal('hide');
+                    $('#mahasiswas-table').DataTable().ajax.reload(); // Reload DataTables
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message + (response.data ? ` (${response.data.imported_rows} data diimport)` : '')
+                    });
+                },
+                error: function(xhr) {
+                    let message = xhr.responseJSON.message;
+                    if (xhr.responseJSON.errors) {
+                        message += '\n' + xhr.responseJSON.errors.join('\n');
+                    }
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: message
+                    });
+                },
+                complete: function() {
+                    submitButton.prop('disabled', false);
                 }
             });
         });
