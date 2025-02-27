@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Models\Mahasiswa;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;

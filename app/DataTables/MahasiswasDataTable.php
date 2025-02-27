@@ -6,10 +6,7 @@ use App\Models\Mahasiswa;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class MahasiswasDataTable extends DataTable
@@ -22,6 +19,11 @@ class MahasiswasDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addIndexColumn() //menambahkan nomor urut
+            ->addColumn('nomor', function ($row) {
+                static $index = 0;
+                return ++$index;
+            })
             ->addColumn('action', function ($row) {
                 return '
                 <button class="btn btn-sm btn-info" title="Lihat" onclick="showDetailModal(' . $row->id . ')">
@@ -33,9 +35,12 @@ class MahasiswasDataTable extends DataTable
                 <button class="btn btn-sm btn-danger btn-delete" title="Hapus" data-id="' . $row->id . '">
                     <i class="fas fa-trash"></i>
                 </button>
+                <button class="btn btn-sm btn-warning btn-reset-password" title="Reset Password" data-id="' . $row->id . '">
+                <i class="fas fa-recycle"></i>
+            </button>
             ';
             })
-            ->setRowId('id');
+            ->rawColumns(['action']);
     }
 
     /**
@@ -43,8 +48,10 @@ class MahasiswasDataTable extends DataTable
      */
     public function query(Mahasiswa $model): QueryBuilder
     {
-        // return $model->newQuery();
-        return Mahasiswa::with('prodi');
+        return $model->newQuery()
+            ->with('prodi')
+            ->orderBy('nim', 'ASC');
+        //return Mahasiswa::with('prodi');
     }
 
     /**
@@ -68,7 +75,7 @@ class MahasiswasDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->title('ID'),
+            Column::computed('nomor')->title('No')->width(10), // Ganti ID dengan nomor urut
             Column::make('nim')->title('NIM'),
             Column::make('nama_mahasiswa')->title('Nama Mahasiswa'),
             Column::make('prodi.nama_prodi')->title('Program Studi'),

@@ -8,6 +8,7 @@ use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Imports\MahasiswaImport;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\DataTables\MahasiswasDataTable;
 
@@ -82,14 +83,27 @@ class MahasiswaController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
-            'nim' => 'required|numeric|unique:mahasiswas,nim',
-            'nama' => 'required',
-            'prodi_id' => 'required|exists:prodis,id',
+            'nimMahasiswa' => 'required|unique:mahasiswas,nim',
+            'namaMahasiswa' => 'required|string|max:255',
+            'email' => 'required|email|unique:mahasiswas,email',
+            'prodi_id' => 'required|exists:prodis,id'
         ]);
 
-        Mahasiswa::create($request->all());
-        return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil ditambahkan');
+        // Simpan data mahasiswa
+        $mahasiswa = Mahasiswa::create([
+            'nim' => $request->nimMahasiswa,
+            'nama_mahasiswa' => $request->namaMahasiswa,
+            'email' => $request->email,
+            'prodi_id' => $request->prodi_id,
+            'password' => Hash::make($request->nimMahasiswa)
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Mahasiswa berhasil ditambahkan.'
+        ]);
     }
 
     public function show(Mahasiswa $mahasiswa)
@@ -122,8 +136,26 @@ class MahasiswaController extends Controller
 
     public function destroy(Mahasiswa $mahasiswa)
     {
+        if (!$mahasiswa) {
+            return response()->json(['success' => false, 'message' => 'Data tidak ditemukan'], 404);
+        }
         $mahasiswa->delete();
         return response()->json(['success' => true, 'message' => 'Data berhasil dihapus']);
+    }
+
+    public function reset($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        // Password direset menjadi NIM mahasiswa
+        $newPassword = $mahasiswa->nim;
+        $mahasiswa->password = Hash::make($newPassword);
+        $mahasiswa->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Password berhasil direset."
+        ]);
     }
 
     public function template()

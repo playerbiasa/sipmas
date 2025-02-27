@@ -27,7 +27,7 @@
                             </a>
                         </span>
                         <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                            data-bs-target="#modal-report">
+                            data-bs-target="#modal-mahasiswa">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -176,6 +176,96 @@
                 complete: function() {
                     submitButton.prop('disabled', false);
                 }
+            });
+        });
+    </script>
+    <script>
+        $(document).on('click', '.btn-delete', function () {
+            let mahasiswaId = $(this).data('id');
+
+            Swal.fire({
+                title: "Apakah kamu yakin?",
+                text: "Data akan dihapus secara permanen!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, hapus!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/mahasiswa/" + mahasiswaId,
+                        type: "DELETE",
+                        data: { _token: "{{ csrf_token() }}" },
+                        success: function (response) {
+                            Swal.fire("Berhasil!", response.message, "success");
+                            $('#mahasiswas-table').DataTable().ajax.reload(); // Reload DataTables
+                        },
+                        error: function (xhr) {
+                            Swal.fire("Error!", "Gagal menghapus data.", "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).on('click', '.btn-reset-password', function() {
+            let mahasiswaId = $(this).data('id');
+
+            Swal.fire({
+                title: "Yakin ingin reset password?",
+                text: "Password akan direset menjadi NIM mahasiswa!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, Reset!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/mahasiswa/reset/${mahasiswaId}`,
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            Swal.fire("Berhasil!", response.message, "success");
+                        },
+                        error: function(xhr) {
+                            Swal.fire("Error!", "Terjadi kesalahan, coba lagi.", "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#form-mahasiswa').submit(function(e) {
+                e.preventDefault(); // Mencegah reload halaman
+
+                $.ajax({
+                    url: "{{ route('mahasiswa.store') }}",
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#modal-mahasiswa').modal('hide'); // Tutup modal
+                        Swal.fire("Berhasil!", response.message, "success");
+                        $('#form-mahasiswa')[0].reset(); // Reset form
+                        $('#mahasiswas-table').DataTable().ajax.reload(); // Reload DataTables
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        let errorMessage = "Terjadi kesalahan!";
+
+                        if (errors) {
+                            errorMessage = Object.values(errors).map(err => err[0]).join('<br>');
+                        }
+
+                        Swal.fire("Error!", errorMessage, "error");
+                    }
+                });
             });
         });
     </script>

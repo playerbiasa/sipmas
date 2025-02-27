@@ -88,7 +88,7 @@
                         </span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{route('aktif.index')}}">
                             Aktif Kuliah
                         </a>
                         <a class="dropdown-item" href="#">

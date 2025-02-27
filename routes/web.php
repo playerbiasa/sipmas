@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SuratAktifController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MahasiswaController;
 
@@ -10,8 +11,12 @@ Route::get('/', function () {
 Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
 Route::post('/mahasiswa/import', [MahasiswaController::class, 'import'])->name('mahasiswa.import');
 Route::get('/mahasiswa/search', [MahasiswaController::class, 'search'])->name('mahasiswa.search');
+Route::post('/mahasiswa/store', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
 Route::get('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'show'])->name('mahasiswa.show');
 Route::get('/mahasiswa/{mahasiswa}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
 Route::put('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
 Route::delete('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+Route::post('/mahasiswa/reset/{id}', [MahasiswaController::class, 'reset'])->name('mahasiswa.reset');
 Route::get('/template',[MahasiswaController::class, 'template'])->name('mahasiswa.template');
+
+Route::get('aktifkuliah', [SuratAktifController::class, 'index'])->name('aktif.index');
