@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\SuratAktifController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MahasiswaController;
+use App\Http\Controllers\Admin\UndanganPenguji;
 
 Route::get('/', function () {
     return view('admin.dashboard');
@@ -17,6 +18,7 @@ Route::get('/mahasiswa/{mahasiswa}/edit', [MahasiswaController::class, 'edit'])-
 Route::put('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
 Route::delete('/mahasiswa/{mahasiswa}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 Route::post('/mahasiswa/reset/{id}', [MahasiswaController::class, 'reset'])->name('mahasiswa.reset');
-Route::get('/template',[MahasiswaController::class, 'template'])->name('mahasiswa.template');
+Route::get('/template', [MahasiswaController::class, 'template'])->name('mahasiswa.template');
 
 Route::get('aktifkuliah', [SuratAktifController::class, 'index'])->name('aktif.index');
+Route::get('undanganpenguji', [UndanganPenguji::class, 'index'])->name('undanganpenguji.index');

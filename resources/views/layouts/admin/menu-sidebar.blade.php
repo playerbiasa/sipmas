@@ -88,7 +88,7 @@
                         </span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{route('aktif.index')}}">
+                        <a class="dropdown-item" href="{{ route('aktif.index') }}">
                             Aktif Kuliah
                         </a>
                         <a class="dropdown-item" href="#">
@@ -163,7 +163,68 @@
                                 </div>
                             </div>
                         </div>
+                        <a class="dropdown-item" href="{{ route('undanganpenguji.index') }}">
+                            Undangan Penguji
+                        </a>
                     </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#navbar-permohonan-surat" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-world-cog">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M21 12a9 9 0 1 0 -8.979 9" />
+                                <path d="M3.6 9h16.8" />
+                                <path d="M3.6 15h8.9" />
+                                <path d="M11.5 3a17 17 0 0 0 0 18" />
+                                <path d="M12.5 3a16.992 16.992 0 0 1 2.522 10.376" />
+                                <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M19.001 15.5v1.5" />
+                                <path d="M19.001 21v1.5" />
+                                <path d="M22.032 17.25l-1.299 .75" />
+                                <path d="M17.27 20l-1.3 .75" />
+                                <path d="M15.97 17.25l1.3 .75" />
+                                <path d="M20.733 20l1.3 .75" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Master Data
+                        </span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">
+                            Dosen
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            Program Studi
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            Pengguna
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('mahasiswa.index') }}">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-power">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M7 6a7.75 7.75 0 1 0 10 0" />
+                                <path d="M12 4l0 8" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Keluar
+                        </span>
+                    </a>
                 </li>
             </ul>
         </div>

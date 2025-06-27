@@ -19,7 +19,8 @@
                             <div class="mb-3">
                                 <label class="form-label">Nomor Induk Mahasiswa (NIM)</label>
                                 <div class="input-group input-group-flat">
-                                    <input type="number" class="form-control" autocomplete="off" name="nimMahasiswa" required>
+                                    <input type="number" class="form-control" autocomplete="off" name="nimMahasiswa"
+                                        required>
                                 </div>
                             </div>
                         </div>
@@ -28,7 +29,7 @@
                                 <label class="form-label">Program Studi</label>
                                 <select class="form-select" name="prodi_id" required>
                                     <option value="">Pilih Program Studi</option>
-                                    @foreach($prodis as $prodi)
+                                    @foreach ($prodis as $prodi)
                                         <option value="{{ $prodi->id }}">{{ $prodi->nama_prodi }}</option>
                                     @endforeach
                                 </select>
@@ -47,13 +48,13 @@
                     <button type="submit" class="btn btn-primary ms-auto">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                             stroke-linejoin="round">
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M12 5l0 14"></path>
                             <path d="M5 12l14 0"></path>
                         </svg>
-                        Create new report
+                        Simpan
                     </button>
                 </div>
             </form>
@@ -75,7 +76,8 @@
                 <div class="modal-body">
                     <input type="file" name="file" id="file" class="form-control" required>
                     <div class="mt-3">
-                        <p>Silahkan download template import Mahsiswa <a href="{{route('mahasiswa.template')}}" target="_blank">di sini</a></p>
+                        <p>Silahkan download template import Mahsiswa <a href="{{ route('mahasiswa.template') }}"
+                                target="_blank">di sini</a></p>
                     </div>
                 </div>
                 <div class="modal-footer">

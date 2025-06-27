@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\SuratAktifDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,9 @@ class SuratAktifController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(SuratAktifDataTable $dataTable)
     {
-        return view('admin.aktifkuliah.index');
+        return $dataTable->render('admin.aktifkuliah.index');
     }
 
     /**
